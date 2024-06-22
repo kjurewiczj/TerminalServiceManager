@@ -21,7 +21,7 @@ class App(ctk.CTk):
 
         self.load_services()
 
-        self.content_frame = ctk.CTkFrame(self.main_frame)
+        self.content_frame = ctk.CTkScrollableFrame(self.main_frame)
         self.content_frame.pack(side="right", fill="both", expand=True)
 
         self.add_service()
