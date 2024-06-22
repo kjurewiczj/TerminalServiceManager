@@ -3,7 +3,7 @@ import pickle
 
 class ServiceController:
     @staticmethod
-    def save_service(self, service_name, path, commands):
+    def save_service(self, service_name, path, commands, load_services):
         for command in commands:
             commands[command] = commands[command].get()
 
@@ -23,3 +23,4 @@ class ServiceController:
             pickle.dump(db, dbfile)
 
         dbfile.close()
+        load_services()
