@@ -1,5 +1,4 @@
-import json
-import os
+import pickle
 
 
 class ServiceController:
@@ -8,15 +7,19 @@ class ServiceController:
         for command in commands:
             commands[command] = commands[command].get()
 
-        print(service_name, path, commands)
+        try:
+            with open('servicePickle', 'rb') as dbfile:
+                db = pickle.load(dbfile)
+        except (FileNotFoundError, EOFError):
+            db = {}
         data = {
             'service_name': service_name,
             'path': path,
             'commands': commands
         }
+        db[service_name] = data
 
-        if not os.path.exists('data'):
-            os.makedirs('data')
+        with open('servicePickle', 'wb') as dbfile:
+            pickle.dump(db, dbfile)
 
-        with open('data/' + service_name.replace(' ', '_') + '.json', 'w', encoding='utf-8') as file:
-            json.dump(data, file, ensure_ascii=False, indent=4)
+        dbfile.close()
